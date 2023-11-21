@@ -18,6 +18,9 @@ steps:
 - checkout: self
 - script: pwd
 - script:  ls
+- script: cd WebGoat-Kyle
+- script: pwd
+- script:  ls
 - task: SynopsysSecurityScan@1
   inputs:
     scanType: 'polaris'
@@ -32,6 +35,9 @@ steps:
 - script:  ls 
 - script:  ls Implementations
 - script:  ls Implementations/AzureBoardsScript
+- script: cd ../Implementations
+- script: pwd
+- script:  ls
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
