@@ -18,7 +18,7 @@ steps:
 - checkout: self
 - script: pwd
 - script:  ls
-- script: cd WebGoat-Kyle
+- script: cd /home/vsts/work/1/s/WebGoat-Kyle
 - script: pwd
 - script:  ls
 - task: SynopsysSecurityScan@1
