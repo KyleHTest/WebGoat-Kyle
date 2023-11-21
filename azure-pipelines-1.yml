@@ -11,7 +11,6 @@ pool:
 steps:
 - script: java -version
 - script:  mvn -v
-- script: mvn package
 #- checkout: self
 - task: SynopsysSecurityScan@1
   inputs:
