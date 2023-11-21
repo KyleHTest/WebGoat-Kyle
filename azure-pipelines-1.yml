@@ -29,7 +29,9 @@ steps:
     bridge_polaris_branch_name: '$(Build.SourceBranchName)'
 - checkout: AzureBoardsScript
 - script: pwd
-- script:  ls
+- script:  ls 
+- script:  ls Implementations
+- script:  ls Implementations/AzureBoardsScript
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
