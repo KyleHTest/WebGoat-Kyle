@@ -18,7 +18,6 @@ steps:
 #- checkout: self
 - script: java -version
 - script:  mvn -v
-- script: mvn package
 - task: SynopsysSecurityScan@1
   inputs:
     scanType: 'polaris'
