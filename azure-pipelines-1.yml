@@ -35,6 +35,7 @@ steps:
 - script:  ls 
 - script:  ls Implementations
 - script:  ls Implementations/AzureBoardsScript
+- script:  ls Implementations/AzureBoardsScript/logs
 - script: cd ../Implementations
 - script: pwd
 - script:  ls
