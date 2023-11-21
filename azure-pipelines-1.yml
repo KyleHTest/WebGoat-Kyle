@@ -16,8 +16,8 @@ resources:
       name: Implementations
 steps:
 - checkout: self
-- script: java -version
-- script:  mvn -v
+- script: pwd
+- script:  ls
 - task: SynopsysSecurityScan@1
   inputs:
     scanType: 'polaris'
@@ -28,6 +28,8 @@ steps:
     bridge_polaris_assessment_types: 'SAST,SCA'
     bridge_polaris_branch_name: '$(Build.SourceBranchName)'
 - checkout: AzureBoardsScript
+- script: pwd
+- script:  ls
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
