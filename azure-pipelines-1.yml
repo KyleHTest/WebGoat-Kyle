@@ -36,7 +36,7 @@ steps:
 - script:  ls Implementations
 - script:  ls Implementations/AzureBoardsScript
 - script:  ls Implementations/AzureBoardsScript/logs
-- script: cd ../Implementations
+- script: cd /home/vsts/work/1/s/Implementations
 - script: pwd
 - script:  ls
 - task: PythonScript@0
