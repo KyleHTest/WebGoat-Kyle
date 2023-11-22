@@ -35,8 +35,8 @@ steps:
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
-    scriptPath: 'Implementations/AzureBoardsScript/polaris_azure_ci.py'
+    scriptPath: 'AzureBoardsScript/polaris_azure_ci.py'
     arguments: '--config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "ADO-Test-WebGoat-1" --polaris-branch-name $(Build.SourceBranchName) --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"'
-    workingDirectory: '/home/vsts/work/1/s/Implementations/AzureBoardsScript/'
-- script: cat /home/vsts/work/1/s/Implementations/AzureBoardsScript/logs/synopsys-azure.log
+    workingDirectory: '/home/vsts/work/1/s/AzureBoardsScript/'
+- script: cat /home/vsts/work/1/s/AzureBoardsScript/logs/synopsys-azure.log
   condition: always()
