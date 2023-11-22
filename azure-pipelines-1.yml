@@ -30,7 +30,7 @@ steps:
     bridge_polaris_application_name: 'kyleh'
     bridge_polaris_project_name: 'AzureIssueTest-2'
     bridge_polaris_assessment_types: 'SAST,SCA'
-    bridge_polaris_branch_name: '$(Build.SourceBranchName)'
+    bridge_polaris_branch_name: '10k'
 
 #- task: PythonScript@0
 #  inputs:
