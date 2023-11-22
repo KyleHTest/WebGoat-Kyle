@@ -8,21 +8,18 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-resources:
-  repositories:
-    - repository: AzureBoardsScript
-      ref: master
-      type: git
-      name: Implementations
+#resources:
+#  repositories:
+#    - repository: AzureBoardsScript
+#      ref: master
+#      type: git
+#      name: Implementations
 steps:
 #- checkout: AzureBoardsScript
 #- checkout: self
 - task: CmdLine@2
   inputs:
     script: |
-     pwd
-     ls
-     cd Implementations
      pwd
      ls
 - task: SynopsysSecurityScan@1
