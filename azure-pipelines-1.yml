@@ -15,13 +15,12 @@ resources:
       type: git
       name: Implementations
 steps:
-- checkout: self
-- script: pwd
-- script:  ls
 - task: CmdLine@2
   inputs:
-    script: 'cd /home/vsts/work/1/s/WebGoat-Kyle
-    pwd' 
+    script: |
+     cd /home/vsts/work/1/s/WebGoat-Kyle
+     pwd
+     ls
 - task: SynopsysSecurityScan@1
   inputs:
     scanType: 'polaris'
