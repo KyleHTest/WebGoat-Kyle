@@ -18,6 +18,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+     pwd
+     ls
      cd WebGoat-Kyle
      pwd
      ls
