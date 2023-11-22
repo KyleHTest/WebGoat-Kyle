@@ -20,9 +20,8 @@ steps:
 - script:  ls
 - task: CmdLine@2
   inputs:
-    script: 'cd /home/vsts/work/1/s/WebGoat-Kyle'
-- script:  pwd
-- script:  ls
+    script: 'cd /home/vsts/work/1/s/WebGoat-Kyle
+    pwd' 
 - task: SynopsysSecurityScan@1
   inputs:
     scanType: 'polaris'
