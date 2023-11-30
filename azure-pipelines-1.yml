@@ -13,18 +13,14 @@ steps:
 - checkout: self
 - bash: |
     curl -fLsS -o bridge.zip https://sig-repo.synopsys.com/artifactory/bds-integrations-release/com/synopsys/integration/synopsys-bridge/latest/synopsys-bridge-linux64.zip && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip \
-    $(Agent.TempDirectory)/synopsys-bridge 
+    $(Agent.TempDirectory)/synopsys-bridge --version
 #--verbose \
 #--stage polaris polaris.serverUrl=''https://poc.polaris.synopsys.com'' polaris.accessToken=''s4jpgckfat47f3dcaebrc486lgmkikhai2pkb3dahsoecu1tg9c25v3smatn2u8nirve6eaa48k7u'' polaris.assessment.types=''SAST,SCA'' polaris.application.name=''kyleh'' polaris.project.name=''AzureIssueTest-2'' polaris.branch.name=''Bash Test'' project.branch = WebGoat-Kyle
-- task: CmdLine@2
-  inputs:
-    script: |
-    
-  displayName: 'Polaris Full Scan'
 - checkout: AzureBoardsScript
 - task: CmdLine@2
   inputs:
     script: |
+     ls 
      python AzureBoardsScript/polaris_azure_ci.py -config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "AzureIssueTest-2" --polaris-branch-name $(Build.SourceBranchName) --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"
 
 #- task: PythonScript@0
