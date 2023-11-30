@@ -9,6 +9,8 @@ resources:
       ref: master
       type: git
       name: Implementations
+variables:
+  - group: polaris-Kyle
 steps:
 - checkout: self
 - bash: |
