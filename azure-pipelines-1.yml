@@ -15,13 +15,14 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      curl -fLsS -o bridge.zip https://sig-repo.synopsys.com/artifactory/bds-integrations-release/com/synopsys/integration/synopsys-bridge/latest/synopsys-bridge-linux64.zip && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
-            polaris.serverUrl='https://poc.polaris.synopsys.com' \
-            polaris.accessToken='s4jpgckfat47f3dcaebrc486lgmkikhai2pkb3dahsoecu1tg9c25v3smatn2u8nirve6eaa48k7u' \
-            polaris.assessment.types='SAST,SCA' \
-            polaris.application.name='kyleh' \
-            polaris.project.name='AzureIssueTest-2' \
-            polaris.branch.name='Bash Test' \
+      curl -fLsS -o bridge.zip https://sig-repo.synopsys.com/artifactory/bds-integrations-release/com/synopsys/integration/synopsys-bridge/latest/synopsys-bridge-linux64.zip && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip $(Agent.TempDirectory)/synopsys-bridge --verbose `
+       --stage polaris `
+            polaris.serverUrl='https://poc.polaris.synopsys.com' `
+            polaris.accessToken='s4jpgckfat47f3dcaebrc486lgmkikhai2pkb3dahsoecu1tg9c25v3smatn2u8nirve6eaa48k7u' `
+            polaris.assessment.types='SAST,SCA' `
+            polaris.application.name='kyleh' `
+            polaris.project.name='AzureIssueTest-2' `
+            polaris.branch.name='Bash Test' `
             project.branch = WebGoat-Kyle
 
   displayName: 'Polaris Full Scan'
