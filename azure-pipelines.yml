@@ -15,6 +15,9 @@ steps:
 - checkout: self
 - bash: |
     ls
+    java -version
+    mvn -version
+    mvn test
 - bash: |
     cd WebGoat-Kyle
 - bash: |
