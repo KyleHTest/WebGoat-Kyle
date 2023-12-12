@@ -38,7 +38,6 @@ steps:
     script: |
       cd Implementations/AzureBoardsScript
       python polaris_azure_ci.py --config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "VSCode" --polaris-branch-name stage --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"
-      cat - task: CmdLine@2
 - task: CmdLine@2
   inputs:
     script: 'cat Implementations/AzureBoardsScript/logs/synopsys-azure.log'
