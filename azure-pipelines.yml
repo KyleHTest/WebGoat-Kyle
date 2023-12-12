@@ -17,25 +17,28 @@ steps:
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 - checkout: self
-#- bash: |
-#    curl -fLsS -o bridge.zip $BRIDGECLI_LINUX64 && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip
-#    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
-#      polaris.assessment.types='SAST' \
-#      polaris.application.name='kyleh' \
-#      polaris.project.name='VSCode' \
-#      polaris.branch.name=stage \
-#      project.directory=WebGoat-Kyle
-#- bash: |
-#    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
-#      polaris.assessment.types='SCA' \
-#      polaris.application.name='kyleh' \
-#      polaris.project.name='VSCode' \
-#      polaris.branch.name=stage \
-#      project.directory=WebGoat-Kyle
+- bash: |
+    curl -fLsS -o bridge.zip $BRIDGECLI_LINUX64 && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip
+    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
+      polaris.assessment.types='SAST' \
+      polaris.application.name='kyleh' \
+      polaris.project.name='VSCode' \
+      polaris.branch.name=stage \
+      project.directory=WebGoat-Kyle
+- bash: |
+    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
+      polaris.assessment.types='SCA' \
+      polaris.application.name='kyleh' \
+      polaris.project.name='VSCode' \
+      polaris.branch.name=stage \
+      project.directory=WebGoat-Kyle
 - checkout: AzureBoardsScript
 - task: CmdLine@2
   inputs:
     script: |
-     cd Implementations/AzureBoardsScript
-     python polaris_azure_ci.py --config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "VSCode" --polaris-branch-name stage --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"
-     cat logs/synopsys-azure.log
+      cd Implementations/AzureBoardsScript
+      python polaris_azure_ci.py --config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "VSCode" --polaris-branch-name stage --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"
+      cat - task: CmdLine@2
+- task: CmdLine@2
+  inputs:
+    script: 'cat Implementations/AzureBoardsScript/logs/synopsys-azure.log'
