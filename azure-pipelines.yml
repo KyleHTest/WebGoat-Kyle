@@ -1,27 +1,41 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- develop
-
+- stage
 pool:
   vmImage: ubuntu-latest
-
+resources:
+  repositories:
+    - repository: AzureBoardsScript
+      ref: master
+      type: git
+      name: Implementations
+variables:
+  - group: polaris-Kyle
 steps:
-
-- task: SynopsysSecurityScan@1
+- task: JavaToolInstaller@0
   inputs:
-    scanType: 'polaris'
-    bridge_polaris_serverUrl: 'https://poc.polaris.synopsys.com'
-    bridge_polaris_accessToken: 's4jpgckfat47f3dcaebrc486lgbiub36hb9ka4tqn2ebj6bfeeqhf9nukgguctd0eocsk8b7l8t5c'
-    bridge_polaris_application_name: 'kyleh'
-    bridge_polaris_project_name: 'ADO-Test'
-    bridge_polaris_assessment_types: 'SAST,SCA'
-
-- task: SynopsysDetectTask@9
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+- checkout: self
+- bash: |
+    curl -fLsS -o bridge.zip $BRIDGECLI_LINUX64 && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip
+    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
+      polaris.assessment.types='SAST' \
+      polaris.application.name='kyleh' \
+      polaris.project.name='VSCode' \
+      polaris.branch.name=stage \
+      project.directory=WebGoat-Kyle
+- bash: |
+    $(Agent.TempDirectory)/synopsys-bridge --verbose --stage polaris \
+      polaris.assessment.types='SCA' \
+      polaris.application.name='kyleh' \
+      polaris.project.name='VSCode' \
+      polaris.branch.name=stage \
+      project.directory=WebGoat-Kyle
+- checkout: AzureBoardsScript
+- task: CmdLine@2
   inputs:
-    BlackDuckService: 'us1a-imp-hub11'
-    DetectArguments: '--detect.project.name=ADOTesting --detect.project.version.name=1 --detect.trust.cert=true'
-    DetectVersion: 'latest'
+    script: |
+     cd Implementations/AzureBoardsScript
+     python polaris_azure_ci.py --config "polaris-azure.conf" --polaris-application-name "kyleh" --polaris-project-name "VSCode" --polaris-branch-name stage --polaris-severities-filter "''''critical'''',''''high'''',''''medium'''',''''low'''',''''info''''" --azure-project-name "PolarisTickets" --azure-iteration-path "iteration 2" --azure-area-path "area path test"
+     cat logs/synopsys-azure.log
