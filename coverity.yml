@@ -3,4 +3,4 @@ capture:
     clean-command: mvn clean
     build-command: mvn install 
   files:
-    exclude-regex: "contributions.js"
+    exclude-regex: "SqlInjectionLesson6a.java"
