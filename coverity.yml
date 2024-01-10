@@ -3,4 +3,4 @@ capture:
     clean-command: mvn clean
     build-command: mvn install 
   files:
-    exclude-regex: "SqlInjectionLesson5a.java"
+    exclude-regex: "*SqlInjectionLesson5a*"
