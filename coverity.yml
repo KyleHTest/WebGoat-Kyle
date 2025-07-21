@@ -1,6 +1,6 @@
 capture:
   build:
     clean-command: mvn clean
-    build-command: mvn install 
+    build-command: mvn install -DskipTests -B
   files:
-    exclude-regex: "SqlInjectionLesson5a"
+    exclude-regex: (^|[\/\\])libs[\/\\]|(^|[\/\\])webwolf[\/\\]
