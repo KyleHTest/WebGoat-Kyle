@@ -57,7 +57,7 @@ jobs:
           polaris_assessment_types: "SCA,SAST"
           polaris_prComment_enabled: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Polaris PR Scan
+      - name: Polaris Rapid Scan
         id: polaris-pr-rapid-Scan
         if: ${{ github.event_name == 'pull_request' }}
         run: |
