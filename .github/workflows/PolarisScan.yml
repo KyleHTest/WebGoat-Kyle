@@ -34,8 +34,8 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         with:
           ### ---------- POLARIS SCANNING: REQUIRED FIELDS ----------
-          polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
-          polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+          polaris_server_url: ${{ vars.POLARIS_SERVERURL }}
+          polaris_access_token: ${{ secrets.POLARIS_ACCESSTOKEN }}
           polaris_assessment_types: "SCA,SAS"
           polaris_application_name: "Whats New In Polaris"
           polaris_project_name: ${{ github.event.repository.name }}
@@ -51,8 +51,8 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@805cbd09e806b01907bbea0f990723c2bb85abe9
         with:
-          polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
-          polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+          polaris_server_url: ${{ vars.POLARIS_SERVERURL }}
+          polaris_access_token: ${{ secrets.POLARIS_ACCESSTOKEN }}
           polaris_application_name: "Whats New In Polaris"
           polaris_project_name: ${{ github.event.repository.name }}
           polaris_branch_name: ${{ github.branch.name }}
