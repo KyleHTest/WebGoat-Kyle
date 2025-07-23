@@ -33,13 +33,11 @@ jobs:
         uses: blackduck-inc/black-duck-security-scan@805cbd09e806b01907bbea0f990723c2bb85abe9
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          ### ---------- POLARIS SCANNING: REQUIRED FIELDS ----------
           polaris_server_url: ${{ vars.POLARIS_SERVERURL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESSTOKEN }}
           polaris_assessment_types: "SCA,SAST"
           polaris_application_name: "Whats New In Polaris"
           polaris_project_name: ${{ github.event.repository.name }}
-          
           polaris_branch_name: ${{ github.branch.name }}
           polaris_test_sca_type: "SCA-PACKAGE,SCA-SIGNATURE"
           detect_search_depth: 2
@@ -59,3 +57,19 @@ jobs:
           polaris_assessment_types: "SCA,SAST"
           polaris_prComment_enabled: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Polaris PR Scan
+        id: polaris-pr-rapid-Scan
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          curl -fLsS -o bridge.zip ${{ vars.BRIDGECLI_LINUX64 }} && unzip -qo -d ${{ runner.temp }} bridge.zip && rm -f bridge.zip
+          ${{ runner.temp }}/bridge-cli-bundle-linux64/bridge-cli --stage polaris \
+            polaris.serverUrl=${{ vars.POLARIS_SERVERURL }} \
+            polaris.accessToken=${{ secrets.POLARIS_ACCESSTOKEN }} \
+            polaris.application.name: "Whats New In Polaris" \
+            polaris.project.name: ${{ github.event.repository.name }} \
+            polaris.branch.name: ${{ github.branch.name }} \
+            polaris.assessment.types: "SCA,SAST" \
+            polaris.test.sast.type: "SAST-RAPID"
+        #    polaris.branch.parent.name=${{ github.event.base_ref }}
+       # github.repository.pull.number=${{ github.event.number }}
+        
