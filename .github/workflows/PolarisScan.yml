@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
             distribution: 'temurin'
-            java-version: '23'
+            java-version: '17'
       - name: Full Polaris Scan
         uses: blackduck-inc/black-duck-security-scan@805cbd09e806b01907bbea0f990723c2bb85abe9
         if: ${{ github.event_name != 'pull_request' }}
