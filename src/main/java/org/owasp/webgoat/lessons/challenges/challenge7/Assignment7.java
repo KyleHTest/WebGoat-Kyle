@@ -1,16 +1,20 @@
+/*
+ * SPDX-FileCopyrightText: Copyright © 2017 WebGoat authors
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 package org.owasp.webgoat.lessons.challenges.challenge7;
 
+import static org.owasp.webgoat.container.assignments.AttackResultBuilder.success;
+
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AttackResult;
 import org.owasp.webgoat.lessons.challenges.Email;
-import org.owasp.webgoat.lessons.challenges.Flag;
-import org.owasp.webgoat.lessons.challenges.SolutionConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.owasp.webgoat.lessons.challenges.Flags;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -25,13 +29,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * @author nbaars
- * @since 4/8/17.
- */
 @RestController
 @Slf4j
-public class Assignment7 extends AssignmentEndpoint {
+public class Assignment7 implements AssignmentEndpoint {
+
+  public static final String ADMIN_PASSWORD_LINK = "375afe1104f4a487a73823c50a9292a2";
 
   private static final String TEMPLATE =
       "Hi, you requested a password reset link, please use this <a target='_blank'"
@@ -44,22 +46,26 @@ public class Assignment7 extends AssignmentEndpoint {
           + "Kind regards, \n"
           + "Team WebGoat";
 
-  @Autowired private RestTemplate restTemplate;
+  private final Flags flags;
+  private final RestTemplate restTemplate;
+  private final String webWolfMailURL;
 
-  @Value("${webwolf.mail.url}")
-  private String webWolfMailURL;
+  public Assignment7(
+      Flags flags, RestTemplate restTemplate, @Value("${webwolf.mail.url}") String webWolfMailURL) {
+    this.flags = flags;
+    this.restTemplate = restTemplate;
+    this.webWolfMailURL = webWolfMailURL;
+  }
 
   @GetMapping("/challenge/7/reset-password/{link}")
   public ResponseEntity<String> resetPassword(@PathVariable(value = "link") String link) {
-    if (link.equals(SolutionConstants.ADMIN_PASSWORD_LINK)) {
+    if (link.equals(ADMIN_PASSWORD_LINK)) {
       return ResponseEntity.accepted()
           .body(
               "<h1>Success!!</h1>"
                   + "<img src='/WebGoat/images/hi-five-cat.jpg'>"
                   + "<br/><br/>Here is your flag: "
-                  + "<b>"
-                  + Flag.FLAGS.get(7)
-                  + "</b>");
+                  + flags.getFlag(7));
     }
     return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
         .body("That is not the reset link for admin");
@@ -94,6 +100,6 @@ public class Assignment7 extends AssignmentEndpoint {
   @GetMapping(value = "/challenge/7/.git", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   @ResponseBody
   public ClassPathResource git() {
-    return new ClassPathResource("challenge7/git.zip");
+    return new ClassPathResource("lessons/challenges/challenge7/git.zip");
   }
 }
