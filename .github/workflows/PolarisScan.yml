@@ -63,7 +63,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           coverity_build_command: ./mvnw install -DskipTests
           coverity_clean_command: /mvnw spotless:apply
-      - name: Polaris PR Scan
+      - name: Polaris Rapid Scan
         id: polaris-pr-rapid-Scan
         if: ${{ github.event_name == 'pull_request' }}
         run: |
